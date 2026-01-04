@@ -2,6 +2,8 @@
 
 A lightweight, zero-dependency logging library for Go that provides colored output for better readability.
 
+[Go Packages](https://pkg.go.dev/github.com/KubeX3/go-logger)
+
 ## Features
 
 * **Simple:** No configuration required.
