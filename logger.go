@@ -1,26 +1,27 @@
-package logger
+package logger;
 
 import (
-	"fmt"
-	"time"
+	"fmt";
+	"os";
+	"time";
 )
 
 // ANSI color codes
 const (
-	colorReset  = "\033[0m"
-	colorRed    = "\033[31m"
-	colorGreen  = "\033[32m"
-	colorYellow = "\033[33m"
-)
+	colorReset  = "\033[0m";
+	colorRed    = "\033[31m";
+	colorGreen  = "\033[32m";
+	colorYellow = "\033[33m";
+);
 
 // getTime returns the current time
 func getTime() string {
-	return time.Now().Format("2006/01/02 15:04:05")
+	return time.Now().Format("2006/01/02 15:04:05");
 }
 
 // printLog handles the actual printing logic to avoid code duplication
 func printLog(level string, color string, message string) {
-	fmt.Printf("[%s] %s[%s]%s %s\n", getTime(), color, level, colorReset, message)
+	fmt.Printf("[%s] %s[%s]%s %s\n", getTime(), color, level, colorReset, message);
 }
 
 // ==========================================
@@ -29,15 +30,21 @@ func printLog(level string, color string, message string) {
 // ==========================================
 
 func LogInfo(args ...interface{}) {
-	printLog("INFO", colorGreen, fmt.Sprint(args...))
+	printLog("INFO", colorGreen, fmt.Sprint(args...));
 }
 
 func LogWarning(args ...interface{}) {
-	printLog("WARNING", colorYellow, fmt.Sprint(args...))
+	printLog("WARNING", colorYellow, fmt.Sprint(args...));
 }
 
 func LogError(args ...interface{}) {
-	printLog("ERROR", colorRed, fmt.Sprint(args...))
+	printLog("ERROR", colorRed, fmt.Sprint(args...));
+}
+
+// LogFatal prints the error and then exits the application (Status 1)
+func LogFatal(args ...interface{}) {
+    LogError(args...); // Reuse your existing red error logger
+    os.Exit(1);        // Kill the app
 }
 
 // ==========================================
@@ -46,13 +53,19 @@ func LogError(args ...interface{}) {
 // ==========================================
 
 func LogInfoF(format string, args ...interface{}) {
-	printLog("INFO", colorGreen, fmt.Sprintf(format, args...))
+	printLog("INFO", colorGreen, fmt.Sprintf(format, args...));
 }
 
 func LogWarningF(format string, args ...interface{}) {
-	printLog("WARNING", colorYellow, fmt.Sprintf(format, args...))
+	printLog("WARNING", colorYellow, fmt.Sprintf(format, args...));
 }
 
 func LogErrorF(format string, args ...interface{}) {
-	printLog("ERROR", colorRed, fmt.Sprintf(format, args...))
+	printLog("ERROR", colorRed, fmt.Sprintf(format, args...));
+}
+
+// LogFatalF prints the formatted error and then exits
+func LogFatalF(format string, args ...interface{}) {
+    LogErrorF(format, args...);
+    os.Exit(1);
 }
